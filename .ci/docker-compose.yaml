@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: "mongo:latest"
+    container_name: "mongodb"
+    restart: "always"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: "hGt7uB3pZrDf9iJk1qWe4rTy6uIoP2aS"
+    ports:
+      - "27017:27017"
+    networks:
+      - "patch_hub_network"
+    volumes:
+      - "patch_hub_db_volume:/data/db"
+
+  patch-hub-server:
+    depends_on:
+      - "mongodb"
+    image: "ghcr.io/blogic-datht/patch-hub-server:latest"
+    container_name: "patch-hub-server"
+    restart: "always"
+    environment:
+      MONGO_USERNAME: "root"
+      MONGO_PASSWORD: "hGt7uB3pZrDf9iJk1qWe4rTy6uIoP2aS"
+      MONGO_HOST: "mongodb"
+      MONGO_PORT: "27017"
+      MONGO_DB: "patches"
+    ports:
+      - "3301:3000"
+    volumes:
+      - "patch_hub_resource_volume:/app/public"
+    networks:
+      - "patch_hub_network"
+
+volumes:
+  patch_hub_db_volume:
+    external: true
+  patch_hub_resource_volume:
+    external: true
+
+networks:
+  patch_hub_network:
+    external: true

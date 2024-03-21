@@ -7,8 +7,7 @@ This is a server for the Patch Hub project. It is a simple server that saves and
 - MongoDB
 
 ```bash
-cd setup
-docker compose up -d
+npm run infra:restart
 ```
 
 - Server

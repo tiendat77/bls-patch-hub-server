@@ -4,9 +4,12 @@
   "description": "Patch Hub Server",
   "main": "dist/main.js",
   "scripts": {
-    "start": "node dist/main.js",
+    "build": "tsc -p tsconfig.json",
+    "start": "npm run build && node dist/main.js",
     "dev": "nodemon src/main.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "infra:stop": "docker compose --project-directory . -f ./.docker/docker-compose-infra.yml down --remove-orphans",
+    "infra:start": "docker compose --project-directory . -f ./.docker/docker-compose-infra.yml up -d",
+    "infra:restart": "npm run infra:stop && npm run infra:start"
   },
   "author": "huynhztienzdat@gmail.com",
   "license": "MIT",
