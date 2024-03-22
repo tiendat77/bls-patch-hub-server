@@ -10,7 +10,7 @@ async function mongooseConnect(): Promise<void> {
   } = process.env;
 
   await connect(`mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`).then(() => {
-    console.log('MongoDB connected successfully!');
+    console.log('✅ MongoDB connected successfully!');
   });
 }
 

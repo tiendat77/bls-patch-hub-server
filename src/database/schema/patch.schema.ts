@@ -27,6 +27,10 @@ const schema = new Schema<IPatch>(
       type: String,
       required: true,
     },
+    author: {
+      type: String,
+      required: false,
+    },
     createdAt: {
       type: Date,
       required: false,

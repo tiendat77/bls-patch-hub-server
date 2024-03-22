@@ -6,6 +6,7 @@ export interface IPatch extends Document {
   version: string | null;
   path: string;
   env: string;
+  author: string;
   software: string;
   createdAt: Date | null;
   updatedAt: Date | null;

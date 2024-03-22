@@ -1,25 +1,21 @@
-import { Router, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { IPatch } from '../database/model/patch.model';
-import PatchModel from '../database/schema/patch.schema';
+import PatchSchema from '../database/schema/patch.schema';
 
-const controller = Router();
-
-controller
+export class PatchController {
 
   /**
-   * GET /api/patches
-   * List all patches
+   * @description List all patches
    */
-  .get('/', async (req: Request, res: Response) => {
-    const patches = await PatchModel.find({});
+  static async list(req: Request, res: Response) {
+    const patches = await PatchSchema.find({});
     res.send(patches);
-  })
+  }
 
   /**
-   * GET /api/patches/:id
-   * Get patch by id
+   * @description Get patch by id
    */
-  .get('/:id', async (req: Request, res: Response) => {
+  static async find(req: Request, res: Response) {
     const { id } = req.params;
 
     if (!id) {
@@ -28,34 +24,27 @@ controller
         .send({ message: 'Required parameter "id" is missing!' });
     }
 
-    const record = await PatchModel.findById(id);
+    const record = await PatchSchema.findById(id);
 
     if (!record) {
       return res.status(404).send({ message: `Patch with id: ${id} was not found.` });
     }
 
     res.send(record);
-  })
+  }
 
-  /**
-   * POST /api/patches
-   * Create a new patch
-   */
-  .post('/', async (req: Request, res: Response) => {
-    const model = new PatchModel(req.body);
-    model.createdAt = new Date();
-    model.updatedAt = new Date();
-
+  static async create(req: Request, res: Response) {
+    const model = new PatchSchema(req.body);
+    model.path = `static/${req.file?.filename ?? ''}`;
     await model.save();
 
     res.status(201).send(model);
-  })
+  }
 
   /**
-   * PATCH /api/patches/:id
-   * Update patch by id
+   * @description Update patch by id
    */
-  .patch('/:id', async (req, res) => {
+  static async update(req: Request, res: Response) {
     const { id } = req.params;
 
     if (!id) {
@@ -64,7 +53,7 @@ controller
         .send({ message: 'Required parameter "id" is missing!' });
     }
 
-    const record = await PatchModel.findById(id);
+    const record = await PatchSchema.findById(id);
 
     if (!record) {
       return res
@@ -75,20 +64,19 @@ controller
     const changes: Partial<IPatch> = req.body;
     changes.updatedAt = new Date();
 
-    const updatedPatch = await PatchModel.findOneAndUpdate(
+    const updatedPatch = await PatchSchema.findOneAndUpdate(
       { _id: id },
       { $set: { ...changes } },
       { new: true }
     );
 
     res.send(updatedPatch);
-  })
+  }
 
   /**
-   * DELETE /api/patches/:id
-   * Delete patch by id
+   * @description Delete patch by id
    */
-  .delete('/:id', async (req, res) => {
+  static async delete(req: Request, res: Response) {
     const { id } = req.params;
 
     if (!id) {
@@ -97,7 +85,7 @@ controller
         .send({ message: 'Required parameter "id" is missing!' });
     }
 
-    const record = await PatchModel.findById(id);
+    const record = await PatchSchema.findById(id);
 
     if (!record) {
       return res
@@ -105,9 +93,9 @@ controller
         .send({ message: `Patch with id: ${id} was not found.` });
     }
 
-    await PatchModel.findOneAndDelete({ _id: id });
+    await PatchSchema.findOneAndDelete({ _id: id });
 
     res.send({ message: 'Patch removed!' });
-  });
+  }
 
-export default controller;
+}
