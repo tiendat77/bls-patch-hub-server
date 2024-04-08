@@ -16,9 +16,9 @@
 **/compose*
 **/Dockerfile*
 **/node_modules
+**/logs
+**/releases
 **/npm-debug.log
 **/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
-LICENSE
-README.md

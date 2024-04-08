@@ -8,6 +8,10 @@ RUN npm install
 COPY . .
 RUN npm run build
 
+COPY .env ./dist
+COPY README.md ./dist
+COPY LICENSE ./dist
+
 # Stage 2: Create production-ready image
 FROM node:20-alpine
 WORKDIR /app
