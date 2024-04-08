@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { IPatch } from '../database/model/patch.model';
-import PatchSchema from '../database/schema/patch.schema';
+import { IPatch } from '@database/model';
+import { PatchSchema } from '@database/schema';
+import { ErrorResponseModel, SuccessResponseModel } from '@interfaces/response';
 
 export class PatchController {
 
@@ -9,7 +10,9 @@ export class PatchController {
    */
   static async list(req: Request, res: Response) {
     const patches = await PatchSchema.find({});
-    res.send(patches);
+    res
+      .status(200)
+      .send(new SuccessResponseModel(patches));
   }
 
   /**
@@ -21,16 +24,20 @@ export class PatchController {
     if (!id) {
       return res
         .status(400)
-        .send({ message: 'Required parameter "id" is missing!' });
+        .send(new ErrorResponseModel(null, 'Required parameter "id" is missing!'));
     }
 
     const record = await PatchSchema.findById(id);
 
     if (!record) {
-      return res.status(404).send({ message: `Patch with id: ${id} was not found.` });
+      return res
+        .status(404)
+        .send(new ErrorResponseModel(null, `Patch with id: ${id} was not found.`));
     }
 
-    res.send(record);
+    res
+      .status(200)
+      .send(new SuccessResponseModel(record));
   }
 
   static async create(req: Request, res: Response) {
@@ -38,7 +45,9 @@ export class PatchController {
     model.path = `static/${req.file?.filename ?? ''}`;
     await model.save();
 
-    res.status(201).send(model);
+    res
+      .status(201)
+      .send(new SuccessResponseModel(model));
   }
 
   /**
@@ -50,7 +59,7 @@ export class PatchController {
     if (!id) {
       return res
         .status(400)
-        .send({ message: 'Required parameter "id" is missing!' });
+        .send(new ErrorResponseModel(null, 'Required parameter "id" is missing!'));
     }
 
     const record = await PatchSchema.findById(id);
@@ -58,7 +67,7 @@ export class PatchController {
     if (!record) {
       return res
         .status(404)
-        .send({ message: `Patch with id: ${id} was not found.` });
+        .send(new ErrorResponseModel(null, `Patch with id: ${id} was not found.`));
     }
 
     const changes: Partial<IPatch> = req.body;
@@ -70,7 +79,9 @@ export class PatchController {
       { new: true }
     );
 
-    res.send(updatedPatch);
+    res
+      .status(200)
+      .send(new SuccessResponseModel(updatedPatch));
   }
 
   /**
@@ -82,7 +93,7 @@ export class PatchController {
     if (!id) {
       return res
         .status(400)
-        .send({ message: 'Required parameter "id" is missing!' });
+        .send(new ErrorResponseModel(null, 'Required parameter "id" is missing!'));
     }
 
     const record = await PatchSchema.findById(id);
@@ -90,12 +101,14 @@ export class PatchController {
     if (!record) {
       return res
         .status(404)
-        .send({ message: `Patch with id: ${id} was not found.` });
+        .send(new ErrorResponseModel(null, `Patch with id: ${id} was not found.`));
     }
 
     await PatchSchema.findOneAndDelete({ _id: id });
 
-    res.send({ message: 'Patch removed!' });
+    res
+      .status(200)
+      .send(new SuccessResponseModel(true, 'Patch removed!'));
   }
 
 }

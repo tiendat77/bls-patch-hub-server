@@ -1,6 +1,6 @@
 import { mkdirSync } from 'fs';
 import { Express } from 'express';
-import mongooseConnect from '../database/mongodb';
+import mongooseConnect from '@database/mongodb';
 
 const appSetup = async (app: Express) => {
   try {

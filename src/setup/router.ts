@@ -1,5 +1,5 @@
 import { Express, Request, Response } from 'express';
-import patchRouter from '../routers/patch.router';
+import patchRouter from '@routers/patch.router';
 
 const routerSetup = (app: Express) =>
   app

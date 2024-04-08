@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import upload from '../setup/storage';
 
-import { PatchController } from '../controllers/patch.controller';
-import { patchValidations, patchValidator } from '../middlewares/patch-validator';
+import upload from '@setup/storage';
+import { PatchController } from '@controllers/patch.controller';
+import { patchValidations, patchValidator } from '@middlewares/patch-validator';
 
 
 const router = Router();

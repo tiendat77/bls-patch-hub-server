@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { Request, Response, NextFunction } from 'express';
 import { body, validationResult } from 'express-validator';
+import { ErrorResponseModel } from '@interfaces/response';
 
 export const patchValidations = () => {
   return [
@@ -29,7 +30,10 @@ export const patchValidator = (req: Request, res: Response, next: NextFunction) 
     if (req.file) {
       fs.unlinkSync(req.file.path);
     }
-    return res.status(400).send({ errors: errors.array() });
+
+    return res
+      .status(400)
+      .send(new ErrorResponseModel(errors.array(), 'Validation failed'));
   }
 
   next();
