@@ -11,19 +11,27 @@ router
 
   /**
    * GET /api/patches
-   * List all patches
+   * @summary List all patches
+   * @tags Patch
+   * @return {SuccessResponseModel} 200 - Response Base - application/json
    */
   .get('/', PatchController.list)
 
   /**
-   * GET /api/patches/:id
-   * Get patch by id
+   * GET /api/patches/{id}
+   * @summary Get patch by id
+   * @tags Patch
+   * @param {string} id.path.required - Patch ID
+   * @return {SuccessResponseModel} 200 - Response Base - application/json
    */
   .get('/:id', PatchController.find)
 
   /**
    * POST /api/patches
-   * Create a new patch
+   * @summary Create new patch
+   * @tags Patch
+   * @param {PatchModel} request.body.required - Request body - application/json
+   * @return {SuccessResponseModel} 200 - Response Base - application/json
    */
   .post(
     '/',
@@ -34,15 +42,32 @@ router
   )
 
   /**
-   * PATCH /api/patches/:id
-   * Update patch by id
+   * PATCH /api/patches/{id}
+   * @summary Update patch by id
+   * @tags Patch
+   * @param {PatchModel} request.body.required - Request body - application/json
+   * @return {SuccessResponseModel} 200 - Response Base - application/json
    */
   .patch('/:id', PatchController.update)
 
   /**
-   * DELETE /api/patches/:id
-   * Delete patch by id
+   * DELETE /api/patches/{id}
+   * @summary Delete patch by id
+   * @tags Patch
+   * @param {string} id.path.required - Patch ID
+   * @return {SuccessResponseModel} 200 - Response Base - application/json
    */
   .delete('/:id', PatchController.delete);
 
 export default router;
+
+/**
+ * @typedef {object} PatchModel
+ * @property {string} name.required - Patch Name
+ * @property {string} description - Patch Description
+ * @property {string} version - Patch Version
+ * @property {string} env - Patch Environment - Production, Staging
+ * @property {string} author - Patch Author - User's email
+ * @property {string} software - Patch Software
+ * @property {string} path - Patch URL
+ */

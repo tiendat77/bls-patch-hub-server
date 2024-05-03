@@ -7,10 +7,14 @@ import express from 'express';
 const app = express();
 
 import appSetup from '@setup/app';
-import routerSetup from '@setup/router';
 import securitySetup from '@setup/security';
+import swaggerSetup from '@setup/swagger';
+import loggerSetup from '@setup/logger';
+import routerSetup from '@setup/router';
 
 securitySetup(app, express);
+swaggerSetup(app);
+loggerSetup(app);
 routerSetup(app);
 void appSetup(app);
 

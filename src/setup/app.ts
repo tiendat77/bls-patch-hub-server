@@ -16,7 +16,7 @@ const appSetup = async (app: Express) => {
      */
     mkdirSync('public/uploads', { recursive: true });
 
-    const PORT = Number(process.env.APP_PORT) || 3000;
+    const PORT = process.env.APP_PORT || 3000;
 
     app.listen(PORT, () => {
       console.log(`✅ Server started on port ${PORT}`);

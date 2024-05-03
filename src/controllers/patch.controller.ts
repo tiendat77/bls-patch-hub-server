@@ -3,11 +3,9 @@ import { IPatch } from '@database/model';
 import { PatchSchema } from '@database/schema';
 import { ErrorResponseModel, SuccessResponseModel } from '@interfaces/response';
 
+
 export class PatchController {
 
-  /**
-   * @description List all patches
-   */
   static async list(req: Request, res: Response) {
     const patches = await PatchSchema.find({});
     res
@@ -15,9 +13,6 @@ export class PatchController {
       .send(new SuccessResponseModel(patches));
   }
 
-  /**
-   * @description Get patch by id
-   */
   static async find(req: Request, res: Response) {
     const { id } = req.params;
 
@@ -50,9 +45,6 @@ export class PatchController {
       .send(new SuccessResponseModel(model));
   }
 
-  /**
-   * @description Update patch by id
-   */
   static async update(req: Request, res: Response) {
     const { id } = req.params;
 
@@ -84,9 +76,6 @@ export class PatchController {
       .send(new SuccessResponseModel(updatedPatch));
   }
 
-  /**
-   * @description Delete patch by id
-   */
   static async delete(req: Request, res: Response) {
     const { id } = req.params;
 
