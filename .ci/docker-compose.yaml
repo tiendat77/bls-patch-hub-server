@@ -3,7 +3,7 @@ version: "3.8"
 services:
   mongodb:
     image: "mongo:latest"
-    container_name: "mongodb"
+    container_name: "patch_hub_mongodb"
     restart: "always"
     environment:
       MONGO_INITDB_ROOT_USERNAME: "root"
@@ -15,11 +15,20 @@ services:
     volumes:
       - "patch_hub_db_volume:/data/db"
 
+  nats:
+    image: "nats:latest"
+    container_name: "patch-hub_nats"
+    restart: "always"
+    ports:
+      - "4222:4222"
+    networks:
+      - "patch_hub_network"
+
   patch-hub-server:
     depends_on:
       - "mongodb"
     image: "ghcr.io/blogic-datht/patch-hub-server:latest"
-    container_name: "patch-hub-server"
+    container_name: "patch_hub-server"
     restart: "always"
     environment:
       MONGO_USERNAME: "root"
