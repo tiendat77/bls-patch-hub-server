@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  nats-server:
+    image: "nats:latest"
+    container_name: "nats-server"
+    command: "-c /etc/nats/nats-server.conf"
+    restart: "on-failure"
+    ports:
+      - "4222:4222"
+      - "4443:4443"
+    volumes:
+      - "./nats-server.conf:/etc/nats/nats-server.conf"
