@@ -11,11 +11,11 @@ router
 
   /**
    * GET /api/patches
-   * @summary List all patches
+   * @summary List all patches with pagination
    * @tags Patch
    * @return {SuccessResponseModel} 200 - Response Base - application/json
    */
-  .get('/', PatchController.list)
+  .get('/', PatchController.paginate)
 
   /**
    * GET /api/patches/{id}

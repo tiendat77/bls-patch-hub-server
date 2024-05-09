@@ -22,7 +22,7 @@ services:
       - "4222:4222"
       - "4443:4443"
     volumes:
-      - "../.ci/nats-server.conf:/etc/nats/nats-server.conf"
+      - ".ci/nats-server.conf:/etc/nats/nats-server.conf"
 
 volumes:
   mongodb_data:
