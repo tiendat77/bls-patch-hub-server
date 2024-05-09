@@ -8,8 +8,8 @@
     "start": "npm run build && node dist/main.js",
     "dev": "nodemon src/main.ts",
     "test": "ts-node src/test.ts",
-    "infra:stop": "docker compose --project-directory . -f ./.docker/docker-compose-infra.yml down --remove-orphans",
-    "infra:start": "docker compose --project-directory . -f ./.docker/docker-compose-infra.yml up -d",
+    "infra:stop": "docker compose --project-directory . -f ./.docker/docker-compose-infra.yaml down --remove-orphans",
+    "infra:start": "docker compose --project-directory . -f ./.docker/docker-compose-infra.yaml up -d",
     "infra:restart": "npm run infra:stop && npm run infra:start"
   },
   "author": "huynhztienzdat@gmail.com",

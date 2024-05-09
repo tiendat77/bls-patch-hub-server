@@ -13,12 +13,16 @@ services:
     volumes:
       - "mongodb_data:/data/db"
 
-  nats:
+  nats-server:
     image: "nats:latest"
     container_name: "patch_hub_nats"
+    command: "-c /etc/nats/nats-server.conf"
     restart: "always"
     ports:
       - "4222:4222"
+      - "4443:4443"
+    volumes:
+      - "../.ci/nats-server.conf:/etc/nats/nats-server.conf"
 
 volumes:
   mongodb_data:

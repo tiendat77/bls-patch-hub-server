@@ -15,20 +15,22 @@ services:
     volumes:
       - "patch_hub_db_volume:/data/db"
 
-  nats:
+  nats-server:
     image: "nats:latest"
-    container_name: "patch-hub_nats"
+    container_name: "patch_hub_nats"
+    command: "-c /etc/nats/nats-server.conf"
     restart: "always"
     ports:
       - "4222:4222"
-    networks:
-      - "patch_hub_network"
+      - "4443:4443"
+    volumes:
+      - "./nats-server.conf:/etc/nats/nats-server.conf"
 
   patch-hub-server:
     depends_on:
       - "mongodb"
     image: "ghcr.io/blogic-datht/patch-hub-server:latest"
-    container_name: "patch_hub-server"
+    container_name: "patch_hub_server"
     restart: "always"
     environment:
       MONGO_USERNAME: "root"
@@ -37,11 +39,18 @@ services:
       MONGO_PORT: "27017"
       MONGO_DB: "patches"
     ports:
-      - "3301:3000"
+      - "4333:3000"
     volumes:
       - "patch_hub_resource_volume:/app/public"
     networks:
       - "patch_hub_network"
+
+  patch-hub-dashboard:
+    image: "ghcr.io/blogic-datht/patch-hub-dashboard:latest"
+    container_name: "patch_hub_dashboard"
+    ports:
+      - "9200:80"
+    restart: "unless-stopped"
 
 volumes:
   patch_hub_db_volume:

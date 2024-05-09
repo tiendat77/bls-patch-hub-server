@@ -9,7 +9,7 @@ docker volume create patch_hub_db_volume
 docker volume create \
   --driver local \
   --opt type=none \
-  --opt device=~/volumes/patch-hub \
+  --opt device=~/home/bls/volumes/patch-hub \
   --opt o=bind \
   patch_hub_resource_volume
 
