@@ -49,7 +49,7 @@ services:
     image: "ghcr.io/blogic-datht/patch-hub-dashboard:latest"
     container_name: "patch_hub_dashboard"
     ports:
-      - "9200:80"
+      - "9300:80"
     restart: "unless-stopped"
 
 volumes:
