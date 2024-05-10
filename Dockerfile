@@ -8,7 +8,7 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-COPY .env ./dist
+COPY .env.prod ./dist
 COPY README.md ./dist
 COPY LICENSE ./dist
 

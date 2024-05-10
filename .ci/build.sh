@@ -1,17 +1,19 @@
 #!/bin/bash
-echo '🐳  Build docker image with tag latest'
 
-IMAGE_NAME='ghcr.io/blogic-datht/patch-hub-server'
-docker build --platform "linux/amd64" -t "$IMAGE_NAME:latest" . || exit 1
+GITHUB_USERNAME=$1
+GITHUB_PASSWORD=$2
+CONTAINER_RELEASE_IMAGE="ghcr.io/${GITHUB_USERNAME}/patch-hub-server:latest"
 
-echo '🚀  Build done!\n'
+# Print each command and exit on error
+set -xe
 
-USERNAME='blogic-datht'
-CR_PAT='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'
+# Login to registry
+echo '🗝️  Login to github registry'
+echo $GITHUB_PASSWORD | docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
 
-# login to github registry
-echo $CR_PAT | docker login ghcr.io -u $USERNAME --password-stdin
+# Build and push image
+echo '🐳  Building docker image with tag latest'
+docker build --platform "linux/amd64" -t ${CONTAINER_RELEASE_IMAGE} -f Dockerfile .
 
-# push image to github registry
-docker push $IMAGE_NAME:latest || exit 1
-echo '🌏  Published image to Github registry'
+echo '🚀  Pushing docker image to github registry'
+docker push ${CONTAINER_RELEASE_IMAGE}
