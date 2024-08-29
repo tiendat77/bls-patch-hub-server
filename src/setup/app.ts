@@ -15,6 +15,7 @@ const appSetup = async (app: Express) => {
      * Create public folder
      */
     mkdirSync('public/uploads', { recursive: true });
+    mkdirSync('public/download', { recursive: true });
 
     const PORT = process.env.APP_PORT || 3000;
 

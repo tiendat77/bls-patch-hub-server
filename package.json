@@ -8,7 +8,7 @@
     "start": "npm run build && node dist/main.js",
     "dev": "nodemon src/main.ts",
     "test": "ts-node src/test.ts",
-    "publish": "sh .ci/build.sh $GITHUB_USERNAME $GITHUB_PASSWORD",
+    "deploy": "sh .ci/build.sh && sh .ci/deploy.sh",
     "infra:stop": "docker compose --project-directory . -f ./.docker/docker-compose-infra.yaml down --remove-orphans",
     "infra:start": "docker compose --project-directory . -f ./.docker/docker-compose-infra.yaml up -d",
     "infra:restart": "npm run infra:stop && npm run infra:start"

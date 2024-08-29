@@ -6,6 +6,7 @@ const securitySetup = (app: Express, express: any) =>
   .use(cors())
   .use(express.json({limit: '25mb'}))
   .use(express.urlencoded({extended: true, limit: '25mb'}))
-  .use('/static', express.static('public/uploads'));
+  .use('/static', express.static('public/uploads'))
+  .use('/download', express.static('public/download'));
 
 export default securitySetup;
