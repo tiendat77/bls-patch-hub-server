@@ -49,6 +49,9 @@ export class PatchController {
           }
         },
         {
+          $sort: { createdAt: -1 }
+        },
+        {
           $facet: {
             list: [
               { $skip: Number(size) * (Number(page) - 1) },
