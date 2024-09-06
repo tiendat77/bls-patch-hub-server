@@ -31,6 +31,10 @@ const schema = new Schema<IPatch>(
       type: String,
       required: false,
     },
+    sql: {
+      type: String,
+      required: false,
+    },
     createdAt: {
       type: Date,
       required: false,

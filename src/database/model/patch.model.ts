@@ -8,6 +8,7 @@ export interface IPatch extends Document {
   env: string;
   author: string;
   software: string;
+  sql: string;
   createdAt: Date | null;
   updatedAt: Date | null;
 }
