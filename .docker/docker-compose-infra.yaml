@@ -1,28 +1,26 @@
-version: "3.8"
-
 services:
   mongodb:
-    image: "mongo:latest"
-    container_name: "patch_hub_mongodb"
-    restart: "always"
+    image: mongo:latest
+    container_name: patch_hub_mongodb
+    restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: "root"
-      MONGO_INITDB_ROOT_PASSWORD: "hGt7uB3pZrDf9iJk1qWe4rTy6uIoP2aS"
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=hGt7uB3pZrDf9iJk1qWe4rTy6uIoP2aS
     ports:
-      - "27017:27017"
+      - 27017:27017
     volumes:
-      - "mongodb_data:/data/db"
+      - mongodb_data:/data/db
 
   nats-server:
-    image: "nats:latest"
-    container_name: "patch_hub_nats"
-    command: "-c /etc/nats/nats-server.conf"
-    restart: "always"
+    image: nats:latest
+    container_name: patch_hub_nats
+    command: -c /etc/nats/nats-server.conf
+    restart: always
     ports:
-      - "4222:4222"
-      - "4443:4443"
+      - 4222:4222
+      - 4443:4443
     volumes:
-      - ".ci/nats-server.conf:/etc/nats/nats-server.conf"
+      - .ci/nats-server.conf:/etc/nats/nats-server.conf
 
 volumes:
   mongodb_data:
